@@ -1,1 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Dinamik Sport">
+<title>Dinamik Sport Guelma</title>
+<style>
+:root{--bg:#0a0a0c;--c1:#212129;--c2:#17171c;--red:#e11d2e;--red2:#8f0f1b;--tx:#f4f4f5;--mut:#9a9aa5;--ok:#22c55e;--warn:#f59e0b;--bad:#ef4444;--none:#6b7280}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
+body{padding:env(safe-area-inset-top) 0 calc(84px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(10,10,12,.88);backdrop-filter:blur(12px);border-bottom:1px solid #22222a}
+.ttl{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:800}
+.who{display:flex;align-items:center;gap:8px;color:var(--mut);font-size:13px}
+.ic{background:#1d1d24;color:var(--tx);border:1px solid #2c2c36;border-radius:10px;width:38px;height:38px;font-size:18px}
+.card{background:linear-gradient(160deg,var(--c1),var(--c2));border:1px solid #2c2c36;border-radius:18px;padding:16px;margin:12px 14px;color:var(--tx);text-align:inherit;font:inherit;display:block;width:calc(100% - 28px);box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 10px 22px rgba(0,0,0,.55),0 4px 0 #0c0c0f;transform:perspective(700px) rotateX(2deg);transition:transform .15s,box-shadow .15s}
+.tap:active{transform:perspective(700px) rotateX(0) translateY(3px);box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 4px 10px rgba(0,0,0,.5),0 1px 0 #0c0c0f}
+.total{text-align:center;border-color:#5a1219}
+.total small{color:var(--mut)}
+.big{font-size:54px;font-weight:900;color:var(--red);text-shadow:0 4px 0 #3a0a0f,0 8px 18px rgba(225,29,46,.4)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px}
+.grid .card{margin:0;width:100%;text-align:center}
+.num{font-size:34px;font-weight:900}
+.lbl{color:var(--mut);font-size:13px;margin-top:4px}
+.row{display:flex;align-items:center;gap:12px}
+.row .nm{flex:1;display:flex;flex-direction:column;gap:3px}
+.row small,.dl{color:var(--mut);font-size:12px}
+.dot{width:14px;height:14px;border-radius:50%;flex:none;box-shadow:0 0 0 3px rgba(255,255,255,.06),0 0 12px currentColor;color:var(--none);background:currentColor}
+.dot.active{color:var(--ok)}.dot.ending{color:var(--warn)}.dot.expired{color:var(--bad)}.dot.none{color:var(--none)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;padding:4px 18px;color:var(--mut);font-size:12px}
+.legend span{display:flex;align-items:center;gap:6px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 6px;text-align:right;border-bottom:1px solid #2a2a33;font-size:15px}
+th{color:var(--mut);font-size:12px;font-weight:600}
+.btn{display:block;background:linear-gradient(180deg,#f0283a,var(--red));color:#fff;border:0;border-radius:14px;padding:14px 18px;font-size:16px;font-weight:800;font-family:inherit;box-shadow:0 5px 0 var(--red2),0 10px 18px rgba(225,29,46,.3);margin:14px;width:calc(100% - 28px)}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--red2),0 3px 8px rgba(225,29,46,.3)}
+label{display:block;color:var(--mut);font-size:13px;margin:12px 0 6px}
+input,select{width:100%;background:#0f0f13;color:var(--tx);border:1px solid #2c2c36;border-radius:12px;padding:13px;font-size:16px;font-family:inherit}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(10,10,12,.92);backdrop-filter:blur(14px);border-top:1px solid #22222a}
+nav button{flex:1;background:#17171c;color:var(--mut);border:1px solid #2c2c36;border-radius:14px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font:inherit;font-size:12px;box-shadow:0 3px 0 #0c0c0f}
+nav button b{font-size:20px;font-weight:400}
+nav button.on{color:#fff;background:linear-gradient(180deg,#f0283a,var(--red));border-color:var(--red);box-shadow:0 3px 0 var(--red2)}
+.login{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:24px}
+.logo{width:92px;height:92px;margin:0 auto 12px;border-radius:26px;background:linear-gradient(160deg,#f0283a,var(--red2));display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:900;box-shadow:0 6px 0 #5a0a12,0 16px 30px rgba(225,29,46,.4)}
+h1{text-align:center;font-size:22px;margin:0 0 22px}
+#err{color:var(--bad);text-align:center;min-height:22px}
+.toast{position:fixed;top:calc(14px + env(safe-area-inset-top));left:14px;right:14px;z-index:20;background:#25252e;border:1px solid #3a3a46;border-radius:14px;padding:13px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.empty{text-align:center;color:var(--mut);padding:30px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.min.js"></script>
+<script>
+const SUPABASE_URL = 'https://skigxmpwdwhfmezcvpnr.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_-X5UQ3gII5d_LyrtVK7CfA_uII5qoL9';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+const CATS = {under_7:'أقل من 7 سنوات',children:'أطفال (7–9)',younger_cadets:'كاديت صغار (10–12)',older_cadets:'كاديت كبار (13–15)',juniors:'جونيور (16–18)',seniors:'كبار (19–40)',masters:'قدماء (41–55)',over_55:'أكثر من 55 سنة',unknown:'غير محدد'};
+const ROLES = {director:'مدير',coach:'مدرب',receptionist:'موظف استقبال'};
+const TABS = {stats:'stats',cat:'stats',members:'members',addMember:'members',groups:'groups',group:'groups',addGroup:'groups'};
+const state = {uid:null,role:null,tab:'stats',appName:'Dinamik Sport Guelma'};
+const app = document.getElementById('app');
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const canWrite = () => ['director','receptionist'].includes(state.role);
+const val = id => document.getElementById(id).value.trim();
+
+function toast(msg){
+  const t = document.createElement('div');
+  t.className = 'toast'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+function nav(){
+  const t = [['stats','📊','الإحصائيات'],['members','👥','المتدربون'],['groups','🏷️','الأفواج']];
+  return '<nav>' + t.map(([k,i,l]) => `<button class="${state.tab===k?'on':''}" onclick="go('${k}')"><b>${i}</b><span>${l}</span></button>`).join('') + '</nav>';
+}
+
+function shell(title, body, back){
+  app.innerHTML = `<header><div class="ttl">${back ? `<button class="ic" onclick="go('${back}')">→</button>` : ''}<span>${esc(title)}</span></div><div class="who">${esc(ROLES[state.role] || '')}<button class="ic" onclick="logout()">⎋</button></div></header><main>${body}</main>${nav()}`;
+}
+
+function loading(title){ shell(title, '<div class="empty">جارٍ التحميل…</div>'); }
+function fail(err){ shell('خطأ', `<div class="card">تعذر تحميل البيانات.<br><small>${esc(err.message || err)}</small></div>`); }
+
+function dot(status){ return `<i class="dot ${esc(status || 'none')}"></i>`; }
+function legend(){ return '<div class="legend"><span><i class="dot active"></i>نشط</span><span><i class="dot ending"></i>ينتهي خلال 7 أيام</span><span><i class="dot expired"></i>منتهٍ</span><span><i class="dot none"></i>بدون اشتراك</span></div>'; }
+function daysText(m){
+  if (m.status === 'none' || m.days_left === null) return '—';
+  if (m.status === 'expired') return `منتهٍ منذ ${-m.days_left} يوم`;
+  return `${m.days_left} يوم`;
+}
+function memberRow(m, groupName){
+  const sub = [groupName, CATS[m.wako_category]].filter(Boolean).join(' · ');
+  return `<div class="card row">${dot(m.status)}<div class="nm"><b>${esc(m.last_name)} ${esc(m.first_name)}</b><small>${esc(sub)}</small></div><span class="dl">${daysText(m)}</span></div>`;
+}
+
+async function go(v, arg){
+  state.tab = TABS[v] || 'stats';
+  if (v === 'stats') return viewStats();
+  if (v === 'cat') return viewCat(arg);
+  if (v === 'members') return viewMembers();
+  if (v === 'addMember') return viewAddMember();
+  if (v === 'groups') return viewGroups();
+  if (v === 'addGroup') return viewAddGroup();
+  if (v === 'group') return viewGroup(arg);
+}
+
+/* ---------- الإحصائيات ---------- */
+async function viewStats(){
+  loading('الإحصائيات');
+  const { data, error } = await sb.from('category_stats').select('*').order('sort_order');
+  if (error) return fail(error);
+  const total = data.reduce((s, r) => s + Number(r.athletes_count), 0);
+  shell('الإحصائيات',
+    `<div class="card total"><small>إجمالي الرياضيين</small><div class="big">${total}</div></div>
+     <div class="grid">${data.map(r => `<button class="card tap" onclick="go('cat','${esc(r.code)}')"><div class="num">${r.athletes_count}</div><div class="lbl">${esc(CATS[r.code] || r.code)}</div></button>`).join('')}</div>`);
+}
+
+async function viewCat(code){
+  loading(CATS[code] || 'الصنف');
+  const { data, error } = await sb.from('category_members').select('*').eq('wako_category', code);
+  if (error) return fail(error);
+  const rows = data.length
+    ? `<table><tr><th>الاسم</th><th>اللقب</th><th>الفوج</th></tr>${data.map(m => `<tr><td>${esc(m.first_name)}</td><td>${esc(m.last_name)}</td><td>${esc(m.group_name || '—')}</td></tr>`).join('')}</table>`
+    : '<div class="empty">لا يوجد رياضيون في هذا الصنف</div>';
+  shell(CATS[code] || 'الصنف', `<div class="card">${rows}</div><div class="legend">العدد: ${data.length}</div>`, 'stats');
+}
+
+/* ---------- المتدربون ---------- */
+async function viewMembers(){
+  loading('المتدربون');
+  const [m, g] = await Promise.all([
+    sb.from('member_status').select('*').order('last_name'),
+    sb.from('groups').select('id,name')
+  ]);
+  if (m.error) return fail(m.error);
+  const names = Object.fromEntries((g.data || []).map(x => [x.id, x.name]));
+  const add = canWrite() ? `<button class="btn" onclick="go('addMember')">＋ إضافة متدرب</button>` : '';
+  const list = m.data.length ? m.data.map(x => memberRow(x, names[x.group_id])).join('') : '<div class="empty">لا يوجد متدربون بعد</div>';
+  shell('المتدربون', add + legend() + list);
+}
+
+async function viewAddMember(){
+  if (!canWrite()) return toast('لا تملك صلاحية الإضافة');
+  loading('متدرب جديد');
+  const { data: groups } = await sb.from('groups').select('id,name').order('name');
+  const opts = '<option value="">— بدون فوج —</option>' + (groups || []).map(x => `<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('');
+  shell('متدرب جديد', `<div class="card">
+    <label>الاسم</label><input id="f_first" autocomplete="off">
+    <label>اللقب</label><input id="f_last" autocomplete="off">
+    <label>تاريخ الميلاد (لتحديد الصنف)</label><input id="f_birth" type="date">
+    <label>الهاتف</label><input id="f_phone" type="tel" dir="ltr">
+    <label>اسم الولي</label><input id="f_gname">
+    <label>هاتف الولي</label><input id="f_gphone" type="tel" dir="ltr">
+    <label>الفوج</label><select id="f_group">${opts}</select></div>
+    <button class="btn" onclick="saveMember()">حفظ</button>`, 'members');
+}
+
+async function saveMember(){
+  const rec = {
+    first_name: val('f_first'), last_name: val('f_last'),
+    birth_date: val('f_birth') || null, phone: val('f_phone') || null,
+    guardian_name: val('f_gname') || null, guardian_phone: val('f_gphone') || null,
+    group_id: val('f_group') || null
+  };
+  if (!rec.first_name || !rec.last_name) return toast('الاسم واللقب مطلوبان');
+  const { error } = await sb.from('members').insert(rec);
+  if (error) return toast('تعذر الحفظ: ' + error.message);
+  toast('تمت الإضافة ✅');
+  go('members');
+}
+
+/* ---------- الأفواج ---------- */
+async function viewGroups(){
+  loading('الأفواج');
+  const { data, error } = await sb.from('group_totals').select('*').order('name');
+  if (error) return fail(error);
+  const add = state.role === 'director' ? `<button class="btn" onclick="go('addGroup')">＋ فوج جديد</button>` : '';
+  const list = data.length
+    ? data.map(g => `<button class="card tap row" onclick="go('group','${esc(g.group_id)}')"><div class="nm"><b>${esc(g.name)}</b><small>${g.athletes_count} رياضي</small></div><span>›</span></button>`).join('')
+    : '<div class="empty">لا توجد أفواج بعد</div>';
+  shell('الأفواج', add + list);
+}
+
+function viewAddGroup(){
+  if (state.role !== 'director') return toast('للمدير فقط');
+  shell('فوج جديد', `<div class="card"><label>اسم الفوج</label><input id="g_name"><label>التوقيت (اختياري)</label><input id="g_sched"></div><button class="btn" onclick="saveGroup()">حفظ</button>`, 'groups');
+}
+
+async function saveGroup(){
+  const name = val('g_name');
+  if (!name) return toast('اسم الفوج مطلوب');
+  const { error } = await sb.from('groups').insert({ name, schedule: val('g_sched') || null });
+  if (error) return toast('تعذر الحفظ: ' + error.message);
+  toast('تمت الإضافة ✅');
+  go('groups');
+}
+
+async function viewGroup(id){
+  loading('الفوج');
+  const [g, m, t] = await Promise.all([
+    sb.from('groups').select('*').eq('id', id).single(),
+    sb.from('member_status').select('*').eq('group_id', id).order('last_name'),
+    sb.from('group_totals').select('*').eq('group_id', id).single()
+  ]);
+  if (g.error) return fail(g.error);
+  const list = m.data && m.data.length ? m.data.map(x => memberRow(x)).join('') : '<div class="empty">لا يوجد رياضيون في هذا الفوج</div>';
+  const showMoney = state.role !== 'coach';
+  const money = showMoney && t.data ? `<div class="legend">مداخيل اليوم: <b>${Number(t.data.income_today)} دج</b> · الإجمالي: <b>${Number(t.data.income_total)} دج</b></div>` : '';
+  const income = canWrite() ? `<div class="card"><label>نوع الإدخال</label>
+    <select id="inc_kind"><option value="daily">مداخيل اليوم</option><option value="advance">تسبيق</option></select>
+    <label>المبلغ (دج)</label><input id="inc_amt" type="number" inputmode="decimal" min="0">
+    <label>ملاحظة (اختياري)</label><input id="inc_note"></div>
+    <button class="btn" onclick="addIncome('${esc(id)}')">تسجيل</button>` : '';
+  shell(g.data.name, legend() + list + `<div class="card total"><small>عدد الرياضيين</small><div class="big">${t.data ? t.data.athletes_count : 0}</div></div>` + money + income, 'groups');
+}
+
+async function addIncome(groupId){
+  const amount = parseFloat(val('inc_amt'));
+  if (!(amount > 0)) return toast('أدخل مبلغاً صحيحاً');
+  const { error } = await sb.from('payments').insert({
+    group_id: groupId, kind: val('inc_kind'), amount,
+    note: val('inc_note') || null, created_by: state.uid, client_ref: crypto.randomUUID()
+  });
+  if (error) return toast('تعذر التسجيل: ' + error.message);
+  toast('تم التسجيل ✅');
+  viewGroup(groupId);
+}
+
+/* ---------- الدخول ---------- */
+function renderLogin(){
+  app.innerHTML = `<div class="login"><div class="logo">D</div><h1>${esc(state.appName)}</h1>
+    <form id="lf"><div class="card" style="transform:none;width:100%;margin:0 0 14px">
+    <label>البريد الإلكتروني</label><input id="em" type="email" dir="ltr" autocomplete="username">
+    <label>كلمة المرور</label><input id="pw" type="password" dir="ltr" autocomplete="current-password"></div>
+    <button class="btn" style="margin:0;width:100%" type="submit">دخول</button></form><p id="err"></p></div>`;
+  document.getElementById('lf').addEventListener('submit', async e => {
+    e.preventDefault();
+    document.getElementById('err').textContent = '';
+    const { error } = await sb.auth.signInWithPassword({ email: val('em'), password: document.getElementById('pw').value });
+    if (error) { document.getElementById('err').textContent = 'البريد أو كلمة المرور غير صحيحة'; return; }
+    init();
+  });
+}
+
+async function logout(){ await sb.auth.signOut(); renderLogin(); }
+
+async function init(){
+  try {
+    const s = await sb.from('app_settings').select('app_name').single();
+    if (s.data) { state.appName = s.data.app_name; document.title = s.data.app_name; }
+  } catch (e) {}
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return renderLogin();
+  state.uid = session.user.id;
+  const p = await sb.from('profiles').select('role').eq('id', state.uid).single();
+  state.role = p.data ? p.data.role : null;
+  if (!state.role) {
+    app.innerHTML = '<div class="login"><div class="card" style="transform:none;width:100%;margin:0">لا تملك صلاحية دخول التطبيق.</div><button class="btn" style="margin:14px 0;width:100%" onclick="logout()">خروج</button></div>';
+    return;
+  }
+  go('stats');
+}
+
+init();
+</script>
+</body>
+</html>
